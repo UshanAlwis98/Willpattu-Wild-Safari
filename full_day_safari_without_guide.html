@@ -1,0 +1,1270 @@
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap");
+
+  :root {
+    --green: #2f6b3a;
+    --green-dark: #1e4827;
+    --green-mid: #3d8a4c;
+    --green-light: #e8f4ea;
+    --green-pale: #f3faf4;
+    --white: #ffffff;
+    --off-white: #f9fdf9;
+    --text-dark: #1a2e1d;
+    --text-mid: #3a5040;
+    --text-light: #6b8c72;
+    --border: #c8e0cc;
+    --gold: #c9952a;
+    --gold-light: #f0d89a;
+    --shadow: 0 4px 24px rgba(47, 107, 58, 0.1);
+    --shadow-lg: 0 8px 40px rgba(47, 107, 58, 0.16);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pkg-page {
+    font-family: "IBM Plex Sans", sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    line-height: 1.6;
+    width: 100%;
+  }
+
+  .pkg-inner {
+    width: 100%;
+    padding: 28px 32px 56px;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-wrap {
+    position: relative;
+    background: #0f2313;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 580px;
+    margin-bottom: 14px;
+    width: 100%;
+  }
+
+  .gallery-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+    will-change: transform;
+  }
+
+  .gallery-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 8s ease;
+  }
+
+  .gallery-slide.active img {
+    transform: scale(1.03);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(15, 35, 18, 0.65) 0%,
+      rgba(30, 72, 39, 0.25) 55%,
+      transparent 100%
+    );
+  }
+
+  .gallery-eyebrow {
+    position: absolute;
+    top: 24px;
+    left: 28px;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    background: rgba(201, 149, 42, 0.2);
+    border: 1px solid rgba(201, 149, 42, 0.4);
+    padding: 6px 18px;
+    border-radius: 100px;
+  }
+
+  .gallery-counter {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 6px 16px;
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 34px;
+    left: 36px;
+    right: 100px;
+    color: #fff;
+  }
+
+  .gallery-caption h2 {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  .gallery-caption p {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 6px;
+  }
+
+  .gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.16);
+    border: 1.5px solid rgba(255, 255, 255, 0.32);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    font-size: 20px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .gallery-nav:hover {
+    background: rgba(47, 107, 58, 0.65);
+    border-color: rgba(255, 255, 255, 0.75);
+  }
+  .gallery-nav.prev {
+    left: 22px;
+  }
+  .gallery-nav.next {
+    right: 22px;
+  }
+
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+
+  .gdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+
+  .gdot.active {
+    background: var(--green);
+    width: 26px;
+    border-radius: 4px;
+  }
+
+  /* ── HEADER ── */
+  .pkg-header {
+    margin-bottom: 36px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .pkg-header h1 {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .pkg-header h1 span {
+    color: var(--green);
+  }
+
+  .pkg-header-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .pkg-header-body p {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .pkg-header-body p + p {
+    margin-top: 14px;
+  }
+
+  .pkg-header-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  .highlight-dot {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 6px;
+  }
+
+  .highlight-item strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+
+  .highlight-item span {
+    font-size: 12.5px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ── QUICK STATS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .stat-chip {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+  }
+
+  .stat-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 5px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  /* ── PRICING ── */
+  .pricing-section {
+    background: linear-gradient(
+      135deg,
+      var(--green-dark) 0%,
+      var(--green) 60%,
+      var(--green-mid) 100%
+    );
+    border-radius: 20px;
+    padding: 36px;
+    margin-bottom: 26px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .pricing-section::before {
+    content: "";
+    position: absolute;
+    top: -90px;
+    right: -90px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .pricing-section::after {
+    content: "";
+    position: absolute;
+    bottom: -70px;
+    left: 50px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(201, 149, 42, 0.1);
+  }
+
+  .pricing-header-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pricing-kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240, 216, 154, 0.72);
+    margin-bottom: 6px;
+  }
+
+  .pricing-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .pricing-note {
+    font-size: 13px;
+    color: rgba(240, 216, 154, 0.65);
+    font-weight: 400;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .price-box {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    padding: 24px 16px 22px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .price-box:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .price-box.best {
+    background: rgba(201, 149, 42, 0.18);
+    border-color: rgba(201, 149, 42, 0.55);
+  }
+
+  .price-box.best:hover {
+    background: rgba(201, 149, 42, 0.28);
+  }
+
+  .price-persons {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+    letter-spacing: 0.01em;
+  }
+
+  .price-sub {
+    font-size: 11px;
+    color: rgba(240, 216, 154, 0.6);
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+
+  .price-divider {
+    width: 32px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 18px;
+  }
+
+  .price-num {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .price-pp {
+    font-size: 11px;
+    color: rgba(240, 216, 154, 0.55);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    margin-bottom: 22px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .section-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .card-sub {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+
+  /* ── INCLUDES ── */
+  .includes-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .includes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    align-content: start;
+  }
+
+  .include-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 12px;
+    background: var(--green-pale);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+    transition: all 0.2s;
+  }
+
+  .include-item:hover {
+    background: var(--green-light);
+    border-color: var(--green-mid);
+    transform: translateY(-1px);
+  }
+
+  .include-check {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    background: var(--green-light);
+    border: 1.5px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .include-check svg {
+    width: 10px;
+    height: 10px;
+    stroke: var(--green);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .includes-text {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .includes-text p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+
+  .includes-callout {
+    background: var(--green-pale);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 18px;
+  }
+
+  .includes-callout strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 6px;
+  }
+
+  .includes-callout p {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── TOUR DETAILS ── */
+  .details-list {
+    display: grid;
+    gap: 0;
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .detail-row:first-child {
+    padding-top: 0;
+  }
+
+  .detail-icon {
+    width: 38px;
+    height: 38px;
+    background: var(--green-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .detail-icon svg {
+    width: 17px;
+    height: 17px;
+    stroke: var(--green);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .detail-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+
+  .detail-val {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  /* ── PICKUP BANNER ── */
+  .pickup-banner {
+    background: var(--green-pale);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    border-radius: 14px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text-mid);
+    margin-top: 22px;
+  }
+
+  .pickup-banner svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--green);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .pricing-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .pkg-header-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .stats-row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+    .gallery-wrap {
+      height: 420px;
+    }
+    .includes-body {
+      grid-template-columns: 1fr;
+    }
+    .includes-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .pkg-inner {
+      padding: 16px 16px 40px;
+    }
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pricing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery-wrap {
+      height: 320px;
+    }
+    .gallery-caption h2 {
+      font-size: 22px;
+    }
+    .includes-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="pkg-page">
+  <div class="pkg-inner">
+    <!-- GALLERY -->
+    <div class="gallery-wrap" id="gallery">
+      <div class="gallery-track" id="gtrack">
+        <div class="gallery-slide active">
+          <img src="./img/IMG_012.jpeg" alt="Wilpattu elephants" />
+          <div class="gallery-overlay"></div>
+          <div class="gallery-eyebrow">Wilpattu National Park · Sri Lanka</div>
+          <div class="gallery-counter" id="gcounter">1 / 5</div>
+          <div class="gallery-caption">
+            <h2>Elephants at<br />the Villu</h2>
+            <p>Sri Lanka's largest national park</p>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="./img/IMG_002.jpg" alt="Forest trails" />
+          <div class="gallery-overlay"></div>
+          <div class="gallery-caption">
+            <h2>Into the<br />Deep Forest</h2>
+            <p>Ancient scrub jungle & open trails</p>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="./img/IMG_007.jpg" alt="Leopard" />
+          <div class="gallery-overlay"></div>
+          <div class="gallery-caption">
+            <h2>Leopard<br />Territory</h2>
+            <p>Highest leopard density in Asia</p>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="./img/IMG_005.jpg" alt="Birdlife" />
+          <div class="gallery-overlay"></div>
+          <div class="gallery-caption">
+            <h2>Wetlands &<br />Birdlife</h2>
+            <p>Over 200 resident & migratory species</p>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="./img/IMG_016.jpeg" alt="Golden hour" />
+          <div class="gallery-overlay"></div>
+          <div class="gallery-caption">
+            <h2>Golden Hour<br />in the Park</h2>
+            <p>Dawn light across the open plains</p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-nav prev" id="gprev">&#8592;</div>
+      <div class="gallery-nav next" id="gnext">&#8594;</div>
+    </div>
+
+    <div class="gallery-dots">
+      <button class="gdot active" data-i="0"></button>
+      <button class="gdot" data-i="1"></button>
+      <button class="gdot" data-i="2"></button>
+      <button class="gdot" data-i="3"></button>
+      <button class="gdot" data-i="4"></button>
+    </div>
+
+    <!-- HEADER -->
+    <div class="pkg-header">
+      <span class="section-label">Full Day Safari Experience</span>
+      <div class="divider"></div>
+      <h1>All Inclusive <span>Full Day Safari - Without Guide</span></h1>
+
+      <div class="pkg-header-body">
+        <div>
+          <p>
+            This full-day safari in Wilpattu National Park is perfect for
+            independent explorers who prefer to navigate the park at their own
+            pace. With a comfortable 4x4 jeep and complete freedom to chart your
+            own route, you will explore different areas of the park with
+            opportunities to spot leopards, sloth bears, elephants, and a
+            variety of birds. The package includes breakfast and lunch, allowing
+            you to maximize your wildlife experience while maintaining complete
+            control over your adventure.
+          </p>
+          <p style="margin-top: 14px">
+            Nestled within the vast, ancient wilderness of Sri Lanka's North
+            Western Province, Wilpattu National Park stands as the island's
+            largest and most historically significant wildlife reserve. Our
+            full-day self-guided safari invites you to experience this
+            extraordinary ecosystem at your own rhythm, with the freedom to
+            linger where you choose and explore routes that capture your
+            imagination.
+          </p>
+          <p style="margin-top: 14px">
+            Departing at 6:15 AM, your journey begins with a comfortable Toyota
+            4×4 pickup from your hotel. With a skilled driver at the wheel and
+            complete autonomy over your route selection, you'll navigate the
+            park's circuits and trails throughout the twelve-hour experience.
+            Stop whenever wildlife activity catches your eye, spend as long as
+            you like at open grasslands and water holes, and discover Wilpattu's
+            beauty on your own terms.
+          </p>
+          <p style="margin-top: 14px">
+            Every practical detail has been arranged for your convenience. A
+            full breakfast is served inside the park at sunrise, followed by a
+            hearty lunch at a scenic rest point midway through your drive.
+            Afternoon snacks, fresh fruits, homemade cake, and Ceylon tea are
+            packed into a cool box alongside chilled water and refreshments.
+            Jeep fees, entrance tickets, taxes, and all service charges are
+            included — allowing you to focus entirely on the experience ahead.
+          </p>
+        </div>
+
+        <div class="pkg-header-highlights">
+          <div class="highlight-item">
+            <div class="highlight-dot"></div>
+            <div>
+              <strong>Leopards, Elephants & Sloth Bears</strong>
+              <span
+                >Wilpattu holds one of the highest leopard densities in Asia,
+                alongside large herds of elephants and the elusive sloth bear,
+                regularly sighted along forested trails.</span
+              >
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-dot"></div>
+            <div>
+              <strong>Complete Freedom & Flexibility</strong>
+              <span
+                >Choose your own routes, set your own pace, and decide where to
+                explore. You have total control over your twelve-hour adventure
+                inside the park.</span
+              >
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-dot"></div>
+            <div>
+              <strong>Fully Catered from Dawn to Dusk</strong>
+              <span
+                >Breakfast, lunch, snacks, fruits, cake, tea, and chilled drinks
+                are all included. You arrive ready to explore and leave with
+                nothing but memories to carry home.</span
+              >
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-dot"></div>
+            <div>
+              <strong>Professional Driver Assistance</strong>
+              <span
+                >Your experienced driver knows the park's roads and can provide
+                practical advice on wildlife viewing, while remaining fully
+                under your direction throughout the day.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="stats-row">
+      <div class="stat-chip">
+        <div class="stat-label">Departs</div>
+        <div class="stat-value">6:15 AM</div>
+      </div>
+      <div class="stat-chip">
+        <div class="stat-label">Returns</div>
+        <div class="stat-value">6:15 PM</div>
+      </div>
+      <div class="stat-chip">
+        <div class="stat-label">Duration</div>
+        <div class="stat-value">12 Hours</div>
+      </div>
+      <div class="stat-chip">
+        <div class="stat-label">Vehicle</div>
+        <div class="stat-value">Toyota 4×4</div>
+      </div>
+      <div class="stat-chip">
+        <div class="stat-label">Max Group</div>
+        <div class="stat-value">6 Persons</div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="pricing-section">
+      <div class="pricing-header-row">
+        <div>
+          <div class="pricing-kicker">All-inclusive · Per person</div>
+          <div class="pricing-title">Package Rates</div>
+        </div>
+        <div class="pricing-note">
+          Rates include all taxes,<br />fees & meals
+        </div>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-box">
+          <div class="price-persons">1 Person</div>
+          <div class="price-sub">Solo traveller</div>
+          <div class="price-divider"></div>
+          <div class="price-num">$172</div>
+          <div class="price-pp">per person</div>
+        </div>
+
+        <div class="price-box">
+          <div class="price-persons">2 Persons</div>
+          <div class="price-sub">Couple</div>
+          <div class="price-divider"></div>
+          <div class="price-num">$108</div>
+          <div class="price-pp">per person</div>
+        </div>
+
+        <div class="price-box best">
+          <div class="price-persons">3 Persons</div>
+          <div class="price-sub">Small group</div>
+          <div class="price-divider"></div>
+          <div class="price-num">$94</div>
+          <div class="price-pp">per person</div>
+        </div>
+
+        <div class="price-box best">
+          <div class="price-persons">4 Persons</div>
+          <div class="price-sub">Family</div>
+          <div class="price-divider"></div>
+          <div class="price-num">$88</div>
+          <div class="price-pp">per person</div>
+        </div>
+
+        <div class="price-box best">
+          <div class="price-persons">5 Persons</div>
+          <div class="price-sub">Group</div>
+          <div class="price-divider"></div>
+          <div class="price-num">$82</div>
+          <div class="price-pp">per person</div>
+        </div>
+
+        <div class="price-box best">
+          <div class="price-persons">6 Persons</div>
+          <div class="price-sub">Best value</div>
+          <div class="price-divider"></div>
+          <div class="price-num">$76</div>
+          <div class="price-pp">per person</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TWO COLUMN: INCLUDES + DETAILS -->
+    <div class="two-col">
+      <div class="section-card">
+        <h3>What's Included</h3>
+        <p class="card-sub">
+          Every item is fully covered — zero hidden costs from start to finish
+        </p>
+        <div class="includes-body">
+          <div class="includes-grid">
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Entrance Tickets
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              All Taxes
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Service Charges
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Jeep Fees
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Binoculars
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Breakfast
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Lunch
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Snacks &amp; Fruits
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Cake &amp; Tea
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Water &amp; Drinks
+            </div>
+            <div class="include-item">
+              <div class="include-check">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              Cool Box
+            </div>
+          </div>
+
+          <div class="includes-text">
+            <p>
+              We believe a great safari should ask nothing of you except your
+              presence and curiosity. Every single cost associated with your day
+              inside Wilpattu — park entrance, government levies, vehicle
+              charges, and driver services — is settled in advance and reflected
+              in your per-person rate.
+            </p>
+            <p>
+              Your food journey across the day is equally complete. A warm Sri
+              Lankan breakfast greets the sunrise, a full lunch is served at a
+              scenic stop inside the park, and the afternoon brings freshly cut
+              fruits, homemade cake, hot Ceylon tea, and chilled refreshments
+              stored in a dedicated cool box. There is no menu to order from, no
+              wallet to reach for, and no moment where the experience is
+              interrupted by logistics.
+            </p>
+            <div class="includes-callout">
+              <strong>Complete independence & flexibility</strong>
+              <p>
+                From hotel pickup to final drop-off, every practical element is
+                handled. You maintain complete control over your route and pace
+                throughout the day.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3>Tour Details</h3>
+        <p class="card-sub">Everything you need to know at a glance</p>
+        <div class="details-list">
+          <div class="detail-row">
+            <div class="detail-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div>
+              <div class="detail-label">Start Time</div>
+              <div class="detail-val">6:15 AM</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 8 14" />
+              </svg>
+            </div>
+            <div>
+              <div class="detail-label">End Time</div>
+              <div class="detail-val">6:15 PM</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg>
+            </div>
+            <div>
+              <div class="detail-label">Duration</div>
+              <div class="detail-val">12 Hours</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="1" y="3" width="15" height="13" rx="2" />
+                <path d="M16 8h4l3 3v5h-7V8z" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="detail-label">Vehicle</div>
+              <div class="detail-val">Toyota 4×4 Jeep</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+              </svg>
+            </div>
+            <div>
+              <div class="detail-label">Jeep Capacity</div>
+              <div class="detail-val">Up to 6 Persons</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <div class="detail-label">Free Pickup &amp; Drop-off</div>
+              <div class="detail-val">Wilpattu Area Hotels</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PICKUP BANNER -->
+    <div class="pickup-banner">
+      <svg viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+      <span
+        ><strong>Free pickup &amp; drop-off included</strong> — complimentary
+        transfers from all hotels in the Wilpattu area. No extra charges, no
+        arrangements needed.</span
+      >
+    </div>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll(".gallery-slide");
+  const track = document.getElementById("gtrack");
+  const dots = document.querySelectorAll(".gdot");
+  const n = slides.length;
+  let cur = 0,
+    timer;
+
+  function go(i) {
+    slides[cur].classList.remove("active");
+    dots[cur].classList.remove("active");
+    cur = (i + n) % n;
+    slides[cur].classList.add("active");
+    dots[cur].classList.add("active");
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    document.getElementById("gcounter").textContent = `${cur + 1} / ${n}`;
+  }
+
+  function autoPlay() {
+    timer = setInterval(() => go(cur + 1), 5000);
+  }
+  function resetTimer() {
+    clearInterval(timer);
+    autoPlay();
+  }
+
+  document.getElementById("gnext").addEventListener("click", () => {
+    go(cur + 1);
+    resetTimer();
+  });
+  document.getElementById("gprev").addEventListener("click", () => {
+    go(cur - 1);
+    resetTimer();
+  });
+  dots.forEach((d) =>
+    d.addEventListener("click", () => {
+      go(+d.dataset.i);
+      resetTimer();
+    }),
+  );
+
+  let tx = 0;
+  document.getElementById("gallery").addEventListener(
+    "touchstart",
+    (e) => {
+      tx = e.touches[0].clientX;
+    },
+    { passive: true },
+  );
+  document.getElementById("gallery").addEventListener(
+    "touchend",
+    (e) => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) {
+        go(dx < 0 ? cur + 1 : cur - 1);
+        resetTimer();
+      }
+    },
+    { passive: true },
+  );
+
+  autoPlay();
+</script>
